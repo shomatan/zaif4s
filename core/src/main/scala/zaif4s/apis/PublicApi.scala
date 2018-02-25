@@ -15,7 +15,7 @@ class PublicApi extends Api {
   def lastPrice(currencyPair: CurrencyPair): ApiPrg[Response[LastPrice]] =
     get[LastPrice](
       HttpQuery(
-        path = "",
+        path = s"/last_price/$currencyPair",
         credentials = credentials,
         baseUrl = baseUrl
       )
