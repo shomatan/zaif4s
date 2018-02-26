@@ -1,15 +1,17 @@
 name := "zaif4s"
 
 lazy val commonSettings = Seq(
-  organization := "com.github.shomatan",
+  organization := "me.shoma",
   version := "0.1.0-SNAPSHOT",
   scalaVersion := "2.12.4",
-  publishTo := Some(
-    if (isSnapshot.value)
-      Opts.resolver.sonatypeSnapshots
+  publishTo := {
+    val repo = "https://maven.shoma.me/"
+    if (version.value.trim.endsWith("SNAPSHOT"))
+      Some("shoma.me snapshots" at repo + "snapshots")
     else
-      Opts.resolver.sonatypeStaging
-  )
+      Some("shoma.me releases"  at repo + "releases")
+  },
+  credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 )
 
 lazy val core = (project in file("core"))
@@ -25,28 +27,14 @@ lazy val test = (project in file("test"))
 
 lazy val root = (project in file("."))
   .settings(commonSettings: _*)
-  .dependsOn(core, akka)
-
-licenses := Seq("APL2" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
-homepage := Some(url("https://github.com/shomatan"))
+  .settings(
+    publishArtifact := false,
+    publish := {},
+    publishLocal := {}
+  )
+  .aggregate(core, akka)
 
 publishMavenStyle := true
 publishArtifact in Test := false
 
-scmInfo := Some(
-  ScmInfo(
-    url("https://github.com/shomatan/zaif4s"),
-    "scm:git@github.com:shomatan/zaif4s.git"
-  )
-)
-
-sonatypeProfileName := "com.github.shomatan"
-
-developers := List(
-  Developer(
-    id    = "shomatan",
-    name  = "Shoma Nishitateno",
-    email = "shoma416@gmail.com",
-    url   = url("https://shoma.me")
-  )
-)
+pomIncludeRepository := { _ => false }
