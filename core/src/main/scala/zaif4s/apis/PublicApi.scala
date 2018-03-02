@@ -22,6 +22,7 @@ class PublicApi extends Api {
       )
     )
 
+  // http://techbureau-api-document.readthedocs.io/ja/latest/public/2_individual/4_ticker.html
   def ticker(currencyPair: CurrencyPair): ApiPrg[Response[Ticker]] =
     get[Ticker](
       HttpQuery(

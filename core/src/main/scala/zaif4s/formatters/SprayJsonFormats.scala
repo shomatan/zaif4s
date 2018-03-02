@@ -1,7 +1,7 @@
 package zaif4s.formatters
 
 import spray.json._
-import zaif4s.datas.LastPrice
+import zaif4s.datas._
 import zaif4s.dsl.RequestError
 
 object SprayJsonFormats extends DefaultJsonProtocol {
@@ -18,6 +18,8 @@ object SprayJsonFormats extends DefaultJsonProtocol {
 
   }
 
-  implicit val requestErrorFormat = jsonFormat1(RequestError)
+  implicit val requestErrorFormat: RootJsonFormat[RequestError] = jsonFormat1(RequestError)
+
+  implicit val tickerJsonFormat: RootJsonFormat[Ticker] = jsonFormat7(Ticker)
 
 }
