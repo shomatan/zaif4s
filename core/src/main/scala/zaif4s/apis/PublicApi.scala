@@ -1,5 +1,6 @@
 package zaif4s.apis
-import zaif4s.datas.{Credentials, CurrencyPair, LastPrice, NoCredential}
+
+import zaif4s.datas._
 import zaif4s.dsl.ApiDsl.ApiPrg
 import zaif4s.dsl.HttpADT.Response
 import zaif4s.dsl.HttpQuery
@@ -16,6 +17,15 @@ class PublicApi extends Api {
     get[LastPrice](
       HttpQuery(
         path = s"/last_price/$currencyPair",
+        credentials = credentials,
+        baseUrl = baseUrl
+      )
+    )
+
+  def ticker(currencyPair: CurrencyPair): ApiPrg[Response[Ticker]] =
+    get[Ticker](
+      HttpQuery(
+        path = s"/ticker/$currencyPair",
         credentials = credentials,
         baseUrl = baseUrl
       )
