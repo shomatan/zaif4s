@@ -31,6 +31,17 @@ class PublicApi extends Api {
         baseUrl = baseUrl
       )
     )
+
+  // http://techbureau-api-document.readthedocs.io/ja/latest/public/2_individual/5_trades.html
+  def trades(currencyPair: CurrencyPair): ApiPrg[Response[Seq[Trade]]] =
+    get[Seq[Trade]](
+      HttpQuery(
+        path = s"/trades/$currencyPair",
+        credentials = credentials,
+        baseUrl = baseUrl
+      )
+    )
+
 }
 
 object PublicApi extends ApiContent[PublicApi] {
