@@ -9,6 +9,17 @@ sealed trait CurrencyPair {
   override def toString: String = s"${currency}_$counterCurrency"
 }
 
+object CurrencyPair {
+  def apply(value: String): CurrencyPair = value match {
+    case "btc_jpy"  => BTC_JPY
+    case "mona_jpy" => MONA_JPY
+    case "xem_jpy"  => XEM_JPY
+    case "xem_btc"  => XEM_BTC
+    case "mona_btc" => MONA_BTC
+    case _ => throw new RuntimeException(s"Invalid CurrencyPair. Input: $value")
+  }
+}
+
 case object BTC_JPY extends CurrencyPair {
   override def currency: Currency = BTC
   override def counterCurrency: Currency = JPY
@@ -24,7 +35,7 @@ case object XEM_JPY extends CurrencyPair {
   override def counterCurrency: Currency = JPY
 }
 
-case object XEMBTC extends CurrencyPair {
+case object XEM_BTC extends CurrencyPair {
   override def currency: Currency = XEM
   override def counterCurrency: Currency = BTC
 }
