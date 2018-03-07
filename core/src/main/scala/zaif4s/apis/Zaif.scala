@@ -4,8 +4,6 @@ import zaif4s.datas.Credentials
 
 class Zaif(override val credentials: Credentials) extends Api {
 
-  override def baseUrl: String = "https://api.zaif.jp"
-
   lazy val publicApi = PublicApi
 }
 

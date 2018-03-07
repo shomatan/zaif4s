@@ -3,7 +3,7 @@ package zaif4s.apis
 import zaif4s.datas.Credentials
 
 trait Api {
-  def baseUrl: String
+  def baseUrl: String = "https://api.zaif.jp"
   def credentials: Credentials
 }
 

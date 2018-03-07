@@ -8,7 +8,7 @@ import zaif4s.formatters.SprayJsonFormats._
 
 class PublicApi extends Api {
 
-  override def baseUrl: String = "https://api.zaif.jp/api/1"
+  override def baseUrl: String = super.baseUrl + "/api/1"
   override def credentials: Credentials = NoCredential
 
   import zaif4s.dsl.ApiDsl.HttpOp._
