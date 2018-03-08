@@ -61,6 +61,16 @@ class PublicApi extends Api {
       )
     )
 
+  // http://techbureau-api-document.readthedocs.io/ja/latest/public/2_individual/6_depth.html
+  def depth(currencyPair: CurrencyPair): ApiPrg[Response[Depth]] =
+    get[Depth](
+      HttpQuery(
+        path = s"/depth/$currencyPair",
+        credentials = credentials,
+        baseUrl = baseUrl
+      )
+    )
+
 }
 
 object PublicApi extends ApiContent[PublicApi] {

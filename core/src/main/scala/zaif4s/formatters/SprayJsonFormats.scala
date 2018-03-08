@@ -75,6 +75,33 @@ object SprayJsonFormats extends DefaultJsonProtocol {
       }
   }
 
+  implicit object DepthInfoFormat extends RootJsonFormat[DepthInfo] {
+    override def write(obj: DepthInfo): JsValue = JsArray(JsNumber(obj.price), JsNumber(obj.amount))
+    override def read(json: JsValue): DepthInfo = {
+      val array = json.convertTo[JsArray]
+      if (array.elements.length == 2) {
+        DepthInfo(array.elements(0).convertTo[Float], array.elements(1).convertTo[Float])
+      } else {
+        deserializationError("Cannot deserialize DepthInfo: invalid input. Raw input: " + json.toString)
+      }
+    }
+  }
+
+  implicit object DepthFormat extends RootJsonFormat[Depth] {
+    override def write(obj: Depth): JsValue = JsObject(
+      "asks" -> obj.asks.map(_.toJson).toJson,
+      "bids" -> obj.bids.map(_.toJson).toJson
+    )
+    override def read(json: JsValue): Depth =
+      json.asJsObject.getFields("asks", "bids") match {
+        case Seq(JsArray(asks), JsArray(bids)) => Depth(
+          asks = asks.map(_.convertTo[DepthInfo]),
+          bids = bids.map(_.convertTo[DepthInfo])
+        )
+        case other => deserializationError("Cannot deserialize Depth: invalid input. Raw input: " + other)
+      }
+  }
+
   implicit val requestErrorFormat: RootJsonFormat[RequestError] = jsonFormat1(RequestError)
 
   implicit val tickerFormat: RootJsonFormat[Ticker] = jsonFormat7(Ticker)

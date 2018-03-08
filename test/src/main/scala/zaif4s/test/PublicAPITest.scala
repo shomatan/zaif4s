@@ -4,8 +4,8 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import cats.implicits._
-import zaif4s.apis.{PublicApi, Zaif}
-import zaif4s.datas.MONA_JPY
+import zaif4s.apis.PublicApi
+import zaif4s.datas._
 import zaif4s.interpreters.AkkaHttpInterpreter
 
 import scala.util.{Failure, Success}
@@ -23,7 +23,8 @@ object PublicAPITest extends App {
 
   val prg = for {
     lastPrice <- publicApi.lastPrice(MONA_JPY).orFail
-  } yield lastPrice
+    depth <- publicApi.depth(BTC_JPY).orFail
+  } yield (lastPrice, depth)
 
   prg.foldMap(httpInterpreter).onComplete {
     case Success(data) =>
