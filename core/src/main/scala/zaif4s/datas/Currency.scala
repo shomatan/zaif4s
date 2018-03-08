@@ -17,3 +17,5 @@ case object MONA extends Currency {
 case object XEM extends Currency {
   override def toString: String = "xem"
 }
+
+case class CurrencyInfo(name: String, isToken: Boolean)

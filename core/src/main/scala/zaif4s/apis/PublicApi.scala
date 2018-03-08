@@ -42,6 +42,25 @@ class PublicApi extends Api {
       )
     )
 
+  // http://techbureau-api-document.readthedocs.io/ja/latest/public/2_individual/1_currencies.html
+  def currencies(): ApiPrg[Response[Seq[CurrencyInfo]]] =
+    get[Seq[CurrencyInfo]](
+      HttpQuery(
+        path = "/currencies/all",
+        credentials = credentials,
+        baseUrl = baseUrl
+      )
+    )
+
+  def currencies(currency: Currency): ApiPrg[Response[Seq[CurrencyInfo]]] =
+    get[Seq[CurrencyInfo]](
+      HttpQuery(
+        path = s"/currencies/$currency",
+        credentials = credentials,
+        baseUrl = baseUrl
+      )
+    )
+
 }
 
 object PublicApi extends ApiContent[PublicApi] {

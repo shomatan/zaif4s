@@ -63,6 +63,18 @@ object SprayJsonFormats extends DefaultJsonProtocol {
       }
   }
 
+  implicit object CurrencyInfoFormat extends RootJsonFormat[CurrencyInfo] {
+    override def write(obj: CurrencyInfo): JsValue = JsObject(
+      "name" -> JsString(obj.name),
+      "is_token" -> JsBoolean(obj.isToken)
+    )
+    override def read(json: JsValue): CurrencyInfo =
+      json.asJsObject.getFields("name", "is_token") match {
+        case Seq(JsString(name), JsBoolean(isToken)) => CurrencyInfo(name, isToken)
+        case other => deserializationError("Cannot deserialize CurrencyInfo: invalid input. Raw input: " + other)
+      }
+  }
+
   implicit val requestErrorFormat: RootJsonFormat[RequestError] = jsonFormat1(RequestError)
 
   implicit val tickerFormat: RootJsonFormat[Ticker] = jsonFormat7(Ticker)
