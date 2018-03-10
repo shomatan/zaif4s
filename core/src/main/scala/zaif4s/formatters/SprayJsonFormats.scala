@@ -63,6 +63,51 @@ object SprayJsonFormats extends DefaultJsonProtocol {
       }
   }
 
+  class CurrencyPairInfoFormat extends RootJsonFormat[CurrencyPairInfo] {
+    override def write(obj: CurrencyPairInfo): JsValue = JsObject(
+      "name"            -> JsString(obj.name),
+      "title"           -> JsString(obj.title),
+      "currency_pair"   -> JsString(obj.currencyPairName),
+      "description"     -> JsString(obj.description),
+      "is_token"        -> JsBoolean(obj.isToken),
+      "event_number"    -> JsNumber(obj.eventNumber),
+      "item_unit_min"   -> JsNumber(obj.itemUnitMin),
+      "item_unit_step"  -> JsNumber(obj.itemUnitStep),
+      "aux_unit_min"    -> JsNumber(obj.auxUnitMin),
+      "aux_unit_step"   -> JsNumber(obj.auxUnitStep),
+      "seq"             -> JsNumber(obj.seq),
+      "aux_japanese"    -> JsString(obj.auxJapanese),
+      "item_japanese"   -> JsString(obj.itemJapanese),
+      "aux_unit_point"  -> JsNumber(obj.auxUnitPoint)
+    )
+    override def read(json: JsValue): CurrencyPairInfo =
+      json.asJsObject.getFields("name", "title", "currency_pair", "description", "is_token", "event_number",
+        "item_unit_min", "item_unit_step", "aux_unit_min", "aux_unit_step", "seq", "aux_japanese",
+        "item_japanese", "aux_unit_point") match {
+        case Seq(JsString(name), JsString(title), JsString(currencyPair), JsString(description), JsBoolean(isToken),
+          JsNumber(eventNumber), JsNumber(itemUnitMin), JsNumber(itemUnitStep), JsNumber(auxUnitMin),
+          JsNumber(auxUnitStep), JsNumber(seq), JsString(auxJapanese), JsString(itemJapanese),
+          JsNumber(auxUnitPoint)) =>
+          CurrencyPairInfo(
+            name = name,
+            title = title,
+            currencyPairName = currencyPair,
+            description = description,
+            isToken = isToken,
+            eventNumber = eventNumber.toInt,
+            itemUnitMin = itemUnitMin.toFloat,
+            itemUnitStep = itemUnitStep.toFloat,
+            auxUnitMin = auxUnitMin.toFloat,
+            auxUnitStep = auxUnitStep.toFloat,
+            seq = seq.toInt,
+            auxJapanese = auxJapanese,
+            itemJapanese = itemJapanese,
+            auxUnitPoint = auxUnitPoint.toInt
+          )
+        case other => deserializationError("Cannot deserialize Trade: invalid input. Raw input: " + other)
+      }
+  }
+
   implicit object CurrencyInfoFormat extends RootJsonFormat[CurrencyInfo] {
     override def write(obj: CurrencyInfo): JsValue = JsObject(
       "name" -> JsString(obj.name),
@@ -106,5 +151,6 @@ object SprayJsonFormats extends DefaultJsonProtocol {
 
   implicit val tickerFormat: RootJsonFormat[Ticker] = jsonFormat7(Ticker)
   implicit val tradeFormat: RootJsonFormat[Trade] = new TradeFormat
+  implicit val currencyPairInfoFormat: RootJsonFormat[CurrencyPairInfo] = new CurrencyPairInfoFormat
 
 }

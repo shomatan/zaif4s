@@ -1,11 +1,25 @@
 package zaif4s.datas
 
+case class CurrencyPairInfo(
+  name: String,
+  title: String,
+  currencyPairName: String,
+  description: String,
+  isToken: Boolean,
+  eventNumber: Int,
+  itemUnitMin: Float,
+  itemUnitStep: Float,
+  auxUnitMin: Float,
+  auxUnitStep: Float,
+  seq: Int,
+  auxJapanese: String,
+  itemJapanese: String,
+  auxUnitPoint: Int
+)
+
 sealed trait CurrencyPair {
-
   def currency: Currency
-
   def counterCurrency: Currency
-
   override def toString: String = s"${currency}_$counterCurrency"
 }
 

@@ -23,12 +23,16 @@ object PublicAPITest extends App {
 
   val prg = for {
     lastPrice <- publicApi.lastPrice(MONA_JPY).orFail
-    depth <- publicApi.depth(BTC_JPY).orFail
-  } yield (lastPrice, depth)
+    currencyPairInfo <- publicApi.currencyPairs().orFail
+  } yield (lastPrice, currencyPairInfo)
 
   prg.foldMap(httpInterpreter).onComplete {
     case Success(data) =>
-      println(data)
+      println("======= Last price =======")
+      println(data._1)
+      println("")
+      println("======= All currency pair info =======")
+      println(data._2)
       Http().shutdownAllConnectionPools() andThen { case _ => system.terminate() }
     case Failure(ex) => ex.printStackTrace()
   }
