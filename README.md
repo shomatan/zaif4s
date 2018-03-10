@@ -12,15 +12,14 @@ resolvers ++= Seq(
 )
   
 libraryDependencies ++= Seq(
-  "me.shoma" %% "zaif4s-core" % "0.1.0-SNAPSHOT",
-  "me.shoma" %% "zaif4s-akka" % "0.1.0-SNAPSHOT"
+  "me.shoma" %% "zaif4s-core" % "0.1.0",
+  "me.shoma" %% "zaif4s-akka" % "0.1.0"
 )
 ```
 
 ## APIs
 See an [official document](http://techbureau-api-document.readthedocs.io/ja/latest/index.html)(Japanese).
 
-### Supported APIs
 - [ ] Public
     - [x] Http
     - [ ] WebSocket

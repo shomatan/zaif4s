@@ -2,7 +2,7 @@ name := "zaif4s"
 
 lazy val commonSettings = Seq(
   organization := "me.shoma",
-  version := "0.1.0-SNAPSHOT",
+  version := "0.1.0",
   scalaVersion := "2.12.4",
   publishTo := {
     val repo = "https://maven.shoma.me/"
