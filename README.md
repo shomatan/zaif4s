@@ -12,8 +12,8 @@ resolvers ++= Seq(
 )
   
 libraryDependencies ++= Seq(
-  "me.shoma" %% "zaif4s-core" % "0.1.0",
-  "me.shoma" %% "zaif4s-akka" % "0.1.0"
+  "me.shoma" %% "zaif4s-core" % "0.2.0-SNAPSHOT",
+  "me.shoma" %% "zaif4s-akka" % "0.2.0-SNAPSHOT"
 )
 ```
 
