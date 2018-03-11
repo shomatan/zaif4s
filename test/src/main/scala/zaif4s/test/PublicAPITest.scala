@@ -8,6 +8,7 @@ import zaif4s.apis.PublicApi
 import zaif4s.datas._
 import zaif4s.interpreters.AkkaHttpInterpreter
 
+import scala.concurrent.Promise
 import scala.util.{Failure, Success}
 
 object PublicAPITest extends App {
