@@ -1,7 +1,7 @@
 name := "zaif4s-core"
 
 libraryDependencies ++= {
-  val catsVersion = "1.0.1"
+  val catsVersion = "1.1.0"
   Seq(
     "io.spray"      %% "spray-json"   % "1.3.4",
     "org.typelevel" %% "cats-core"    % catsVersion,
