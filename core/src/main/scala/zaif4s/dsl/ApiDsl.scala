@@ -7,5 +7,5 @@ object ApiDsl {
   type ApiADT[A] = HttpADT[A]
   type ApiPrg[A] = Free[ApiADT, A]
 
-  val HttpOp: ZaifHttpOp.type = ZaifHttpOp
+  val HttpOp: HttpDSL.type = HttpDSL
 }

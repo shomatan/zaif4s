@@ -1,8 +1,9 @@
-package zaif4s.dsl
+package zaif4s.interpreters
 
 import cats.{Monad, ~>}
 import spray.json.JsonFormat
 import zaif4s.dsl.HttpADT.Response
+import zaif4s.dsl.{Get, HttpADT, HttpQuery, Pure}
 
 trait ZaifHttpInterpreter[F[_]] extends (HttpADT ~> F) {
 

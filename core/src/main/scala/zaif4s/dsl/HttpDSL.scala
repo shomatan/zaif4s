@@ -4,7 +4,7 @@ import cats.free.Free
 import spray.json.JsonFormat
 import zaif4s.dsl.HttpADT.Response
 
-object ZaifHttpOp {
+object HttpDSL {
 
   type HttpF[A] = Free[HttpADT, A]
 
